@@ -1,0 +1,15 @@
+#!/bin/bash
+if [ "$1" = "triggered" ]
+then
+  if [ "$2" = "/opt/QQ/qq" ]
+  then
+    rm -rf /usr/bin/qq
+    # Launcher Fix
+    sed -i '3s!/opt/QQ/qq!linuxqq!' "/usr/share/applications/qq.desktop"
+    # Icon Fix
+    sed -i '6s!/usr/share/icons/hicolor/512x512/apps/qq.png!qq!' "/usr/share/applications/qq.desktop"
+    # Temporary Solution: Remove libvips which comes from package "linuxqq" itself
+    # rm -f "${pkgdir}/opt/QQ/resources/app/sharp-lib/libvips-cpp.so.42"
+  fi
+  exit 0
+fi
