@@ -19,7 +19,7 @@ cd debian-custom-trigger
 手动构建包：
 
 ```bash
-dpkg-deb -b <包名>.deb <包名目录>
+dpkg-deb -b <包名目录> <包名>.deb
 ```
 
 使用 `dpkg` 安装触发器:
@@ -28,7 +28,7 @@ dpkg-deb -b <包名>.deb <包名目录>
 sudo dpkg -i <pkgname>.deb
 ```
 
-触发触发器的方法为重新安装对应包，即可触发对应触发器，获得 patch 效果
+触发触发器的方法为强制重新安装对应包，即可触发对应触发器，获得 patch 效果
 
 ### 包含的包
 |pkgname|trigger-name|desc|

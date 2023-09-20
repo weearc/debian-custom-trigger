@@ -1,0 +1,49 @@
+#!/bin/bash
+if [ "$1" = "triggered" ]
+then
+  if [ "$2" = "/opt/google/chrome/chrome" ]
+  then
+    rm -rf /usr/bin/google-chrome
+    rm -rf /usr/bin/google-chrome-stable
+    # Fix Icons
+    for i in 16x16 24x24 32x32 48x48 64x64 128x128 256x256; do
+	install -Dm644 /opt/google/chrome/product_logo_${i/x*/}.png \
+		/usr/share/icons/hicolor/$i/apps/google-chrome.png
+    done
+    # Fix the Chrome desktop entry
+    sed -i \
+	-e "/Exec=/i\StartupWMClass=Google-chrome" \
+	-e "s/x-scheme-handler\/ftp;\?//g" \
+	/usr/share/applications/google-chrome.desktop
+
+    # Remove the Debian Cron job, duplicate product logos and menu directory
+    rm -r \
+	/etc/cron.daily/google-chrome \
+	/opt/google/chrome/cron/ \
+	/opt/google/chrome/product_logo_*.{png,xpm} \
+	/usr/share/menu/google-chrome.menu
+    # Fix launcher
+    echo "#!/bin/bash
+
+XDG_CONFIG_HOME=\${XDG_CONFIG_HOME:-~/.config}
+
+# Allow users to override command-line options
+if [[ -f \$XDG_CONFIG_HOME/chrome-flags.conf ]]; then
+    CHROME_USER_FLAGS=\"\$(grep -v '^#' \$XDG_CONFIG_HOME/chrome-flags.conf)\"
+fi
+
+# Launch
+exec /opt/google/chrome/google-chrome \$CHROME_USER_FLAGS \"\$@\"" > /usr/bin/google-chrome-stable
+    chmod a+x /usr/bin/google-chrome-stable
+  fi
+
+  echo "======"
+  echo ""
+  echo "Google Chrome updated and patched! Launcher is called google-chrome-stable"
+  echo ""
+  echo "options can be setup in ~/.config/chrome-flags.conf"
+  echo ""
+  echo "======"
+
+  exit 0
+fi
