@@ -35,3 +35,4 @@ sudo dpkg -i <pkgname>.deb
 |:-:|:-:|:-:|
 |google-chrome-stable|google-chrome-stable-trigger|-|
 |linuxqq|linuxqq-trigger|-|
+|steam-installer|steam-runtime-trigger|-|

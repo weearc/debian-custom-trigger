@@ -1,0 +1,8 @@
+Package: steam-installer-trigger
+Version: 0.1
+Architecture: amd64
+Maintainer: weearc <qby19981121@gmail.com>
+Installed-Size: 1
+Section: web
+Priority: optional
+Description: steam runtime trigger
