@@ -31,8 +31,9 @@ sudo dpkg -i <pkgname>.deb
 触发触发器的方法为强制重新安装对应包，即可触发对应触发器，获得 patch 效果
 
 ### 包含的包
-|pkgname|trigger-name|desc|
-|:-:|:-:|:-:|
-|google-chrome-stable|google-chrome-stable-trigger|-|
-|linuxqq|linuxqq-trigger|-|
-|steam-installer|steam-runtime-trigger|-|
+|pkgname|trigger-name|last update|desc|
+|:-:|:-:|:-:|:-:|
+|google-chrome-stable|google-chrome-stable-trigger|2023-09-20|-|
+|linuxqq|linuxqq-trigger|2023-09-20|-|
+|steam-installer|steam-runtime-trigger|2023-09-21|-|
+|wps-office|wps-office-trigger|2023-09-22|-|

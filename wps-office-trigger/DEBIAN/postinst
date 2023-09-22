@@ -1,0 +1,20 @@
+#!/bin/bash
+PATCH_TARGET_DIR="/opt/kingsoft/wps-office/office6"
+
+if [ "$1" = "triggered" ]
+then
+  if [ "$2" = "$PATCH_TARGET_DIR/wps" ]
+  then
+    # Fix for wpspdf
+    if  [ -f "$PATCH_TARGET_DIR/libpdfmain.so" ];then
+        test=$(ldd "$PATCH_TARGET_DIR/libpdfmain.so" | grep libtiff.so | grep 5 | grep 'not found'); 
+    fi
+    if [ -z "$test" ];then
+        echo "No thing to patch for wps office";
+    else 
+        echo "Patching: add symbol link from /usr/lib/x86_64-linux-gnu/libtiff.so.6 to /usr/lib/x86_64-linux-gnu/libtiff.so.5";
+        ln -sf /usr/lib/x86_64-linux-gnu/libtiff.so.6 /usr/lib/x86_64-linux-gnu/libtiff.so.5;
+    fi
+  fi
+  exit 0
+fi
