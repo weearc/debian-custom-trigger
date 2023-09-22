@@ -1,0 +1,39 @@
+#!/bin/bash
+PATCH_TARGET_DIR="/opt/qqmusic/"
+
+if [ "$1" = "triggered" ]
+then
+  if [ "$2" = "/opt/qqmusic/qqmusic" ]
+  then
+    desktopfile="/usr/share/applications/qqmusic.desktop"
+    sed -i '3c Exec=qqmusic %U' "$desktopfile"
+    sed -i 'N;2aName[zh_CN]=QQ音乐\nKeywords=qqmusic' "$desktopfile"
+    # patch from aur package qqmusic-bin
+    # Hex patch
+    # 1. Fix orphaned processes
+    # 2. Fix search
+    _subst="
+        s|\xA4\x8B\x7A\xB9\x8D\xCF\x54\xAE|\xA4\x8B\x7A\xB9\x85\xEF\x54\xAE|
+        s|\xB3\x1D\xF5\xCB\x24\xBC|\xA3\x63\xBB\xC9\x3F\xBC|
+    "
+    sed "$_subst" -i "$PATCH_TARGET_DIR/resources/app.asar"
+
+    chmod g-w -R "$PATCH_TARGET_DIR" # Fix directory permissions
+    # Fix launcher
+    if [ -f "/usr/bin/qqmusic" ];then
+      # For ubuntu, Debian sid may encounter problem
+      rm -rf /usr/bin/qqmusic
+      echo '#!/bin/bash
+exec /opt/qqmusic/qqmusic --disable-gpu-sandbox "$@"' > /usr/bin/qqmusic 
+      chmod a+x /usr/bin/qqmusic
+    else
+      echo '#!/bin/bash
+exec /opt/qqmusic/qqmusic --disable-gpu-sandbox "$@"' > /usr/bin/qqmusic 
+      chmod a+x /usr/bin/qqmusic
+    fi
+    echo "!!!"
+    echo "QQ Music patched! If you haven't used this before, please remove ~/.config/qqmusic to avoid crashes!"
+    echo "!!!"
+  fi
+  exit 0
+fi

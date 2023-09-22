@@ -1,0 +1,8 @@
+Package: qqmusic-trigger
+Version: 0.1
+Architecture: amd64
+Maintainer: weearc <qby19981121@gmail.com>
+Installed-Size: 1
+Section: media
+Priority: optional
+Description: qq music trigger
