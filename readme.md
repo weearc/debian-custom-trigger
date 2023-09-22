@@ -37,3 +37,4 @@ sudo dpkg -i <pkgname>.deb
 |linuxqq|linuxqq-trigger|2023-09-20|-|
 |steam-installer|steam-runtime-trigger|2023-09-21|-|
 |wps-office|wps-office-trigger|2023-09-22|-|
+|qqmusic|qqmusic-trigger|2023-09-22|-|
